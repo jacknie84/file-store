@@ -27,6 +27,14 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifactId = "file-delivery"
             from(components["java"])
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
         }
     }
 
