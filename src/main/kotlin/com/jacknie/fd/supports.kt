@@ -13,6 +13,7 @@ fun getUUIDFilename(source: FileSource): String {
 /**
  * 시스템 오늘 일시 인덱스 경로를 가지는 파일 저장 경로를 생성
  */
-fun getTodayIndexPath(pathPrefix: String, source: FileSource, separator: String = "/"): String {
-    return "$pathPrefix${separator}${source.storePath}$separator${LocalDate.now()}"
+fun getTodayIndexPath(pathPrefix: String, source: FileSource): String {
+    val indexedPath = "$pathPrefix/${source.storePath}/${LocalDate.now()}"
+    return indexedPath.replace("\\", "/")
 }

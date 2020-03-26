@@ -20,11 +20,19 @@ class FileDeliveryTest {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    @Test(expected = NoSuchFileException::class) fun fsIntTest() {
+    @Test(expected = NoSuchFileException::class) fun `file system integration test`() {
         val policy = mockk<FilePolicy>()
         val userHome = System.getProperty("user.home")
-        every { policy.getSystemPath(any()) } answers { getTodayIndexPath(userHome, this.arg(0), File.separator) }
-        every { policy.generateFilename(any()) } answers { getUUIDFilename(this.arg(0)) }
+        var systemPath = ""
+        var filename = ""
+        every { policy.getSystemPath(any()) } answers {
+            systemPath = getTodayIndexPath(userHome, arg(0))
+            systemPath
+        }
+        every { policy.generateFilename(any()) } answers {
+            filename = getUUIDFilename(this.arg(0))
+            filename
+        }
         every { policy.verifyFileSource(any()) } answers { FileVerification(this.arg(0), emptyList()) }
         val factory = FsFileDeliveryFactory(FileSystems.getDefault())
         val fileDelivery = factory.createFileDelivery()
@@ -33,6 +41,10 @@ class FileDeliveryTest {
         val source = FileSource("test/path", content, text.length.toLong(), "test.txt", "txt", "text/plain")
         val file = fileDelivery.put(policy, source)
         logger.debug("{}", file)
+
+        assertEquals(filename, file.filename)
+        assertEquals(systemPath, file.path)
+
         val inputStream = fileDelivery.get(file)
         assertEquals(text, inputStream.bufferedReader().use { it.readText() })
         fileDelivery.delete(file)
