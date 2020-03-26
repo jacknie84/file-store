@@ -25,7 +25,7 @@ data class DeliveredFile(
         /**
          * 저장 된 bytes 파일 사이즈를 리턴한다.
          */
-        var fileSize: Long,
+        var filesize: Long,
 
         /**
          * 저장 된 파일의 원래 이름을 리턴한다.

@@ -18,7 +18,7 @@ data class FileSource(
         /**
          * bytes 파일 사이즈를 리턴한다.
          */
-        var fileSize: Long,
+        var filesize: Long,
 
         /**
          * 파일 확장자를 포함한 파일 이름을 리턴한다.

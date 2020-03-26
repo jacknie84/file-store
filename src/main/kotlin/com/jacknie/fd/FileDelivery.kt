@@ -47,7 +47,7 @@ class FileDelivery<T : FileStoreSession>(
 
     private fun saveFileSource(fileStore: FileStore<T>, path: String, filename: String, source: FileSource, session: T): DeliveredFile {
         fileStore.save(session, path, filename, source.content)
-        return DeliveredFile(path, filename, source.extension, source.mimeType, source.fileSize, source.filename)
+        return DeliveredFile(path, filename, source.extension, source.mimeType, source.filesize, source.filename)
     }
 
     private fun getFilename(policy: FilePolicy, fileStore: FileStore<T>, path: String, source: FileSource, session: T): String {

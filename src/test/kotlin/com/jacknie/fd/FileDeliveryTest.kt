@@ -9,7 +9,6 @@ import io.mockk.every
 import io.mockk.mockk
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
-import java.io.File
 import java.io.IOException
 import java.nio.file.FileSystems
 import java.nio.file.NoSuchFileException
