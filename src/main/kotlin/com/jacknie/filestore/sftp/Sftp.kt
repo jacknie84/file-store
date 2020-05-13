@@ -1,4 +1,4 @@
-package com.jacknie.fd.sftp
+package com.jacknie.filestore.sftp
 
 import com.jcraft.jsch.SocketFactory
 import com.jcraft.jsch.UserInfo

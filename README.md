@@ -1,2 +1,2 @@
-# file-delivery
-simple file delivery abstraction
+# file-store
+simple file store abstraction
