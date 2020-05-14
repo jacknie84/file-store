@@ -8,13 +8,13 @@ import com.jacknie.filestore.model.Filename
 
 data class FileStoreLocatorBuilder(
         private var overwrite: Boolean = false,
-        private var naming: (() -> String)? = null,
+        private var naming: (() -> Filename)? = null,
         private var uploadDir: FileDirectory? = null,
         private var filename: Filename? = null,
         private var tryLimit: Int = 10
 ) {
     fun overwrite() = apply { this.overwrite = true }
-    fun naming(naming: () -> String) = apply { this.naming = naming }
+    fun naming(naming: () -> Filename) = apply { this.naming = naming }
     fun uploadDir(uploadDir: FileDirectory) = apply { this.uploadDir = uploadDir }
     fun filename(filename: Filename) = apply { this.filename = filename }
     fun tryLimit(tryLimit: Int) = apply { this.tryLimit = tryLimit }
@@ -27,7 +27,7 @@ data class FileStoreLocatorBuilder(
         }
     }
 
-    private fun locateUnique(uploadDir: FileDirectory, naming: () -> String, session: FileStoreSession): FilePath {
+    private fun locateUnique(uploadDir: FileDirectory, naming: () -> Filename, session: FileStoreSession): FilePath {
         var tryCount = 0
         var filePath: FilePath
         do {
@@ -35,8 +35,7 @@ data class FileStoreLocatorBuilder(
                 throw IllegalStateException("The try limit($tryLimit) has been exceeded.")
             }
             tryCount++
-            val filename = Filename(naming(), filename!!.extension)
-            filePath = FilePath(uploadDir, filename)
+            filePath = FilePath(uploadDir, naming())
         } while (!overwrite && session.exists(filePath))
         return filePath
     }
