@@ -25,7 +25,7 @@ publishing {
 
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = "file-delivery"
+            artifactId = "file-store"
             from(components["java"])
             versionMapping {
                 usage("java-api") {
