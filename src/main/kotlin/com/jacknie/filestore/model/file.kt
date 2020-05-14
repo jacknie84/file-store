@@ -6,6 +6,15 @@ data class FilePath(
         val directory: FileDirectory,
         var filename: Filename
 ) {
+    companion object {
+        fun parse(separator: String, filePath: String): FilePath {
+            val directoryIndex = filePath.lastIndexOf(separator)
+            val directory = FileDirectory(separator, filePath.substring(0, directoryIndex))
+            val filename = Filename(filePath.substring(directoryIndex + 1))
+            return FilePath(directory, filename)
+        }
+    }
+
     override fun toString() = "$directory${directory.separator}$filename"
 }
 
